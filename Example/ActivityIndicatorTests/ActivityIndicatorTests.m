@@ -1,8 +1,5 @@
 //
-//  ActivityIndicatorTests.m
-//  ActivityIndicatorTests
-//
-//  Created by Aleh Dzenisiuk on 02/03/15.
+//  TTWKActivityIndicator example
 //  Copyright (c) 2015 TouchTribe B.V. All rights reserved.
 //
 
@@ -10,7 +7,6 @@
 #import <XCTest/XCTest.h>
 
 @interface ActivityIndicatorTests : XCTestCase
-
 @end
 
 @implementation ActivityIndicatorTests

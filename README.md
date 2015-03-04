@@ -3,6 +3,8 @@
 A drop-in component that simplifies creating of AppleWatch-style activity animations at run time in both 
 regular iOS apps and WatchKit extensions. You can customize the color and the size of the bubbles.
 
+![](screenshot.gif)
+
 ## Quick Start
 
 To use with your WatchKit extension:
@@ -43,4 +45,4 @@ You can also just drop in `/Pod/Classes/TTWKActivityIndicator.*` into your proje
 
 ## Author & License
 
-TTWKActivityIndicator is created by TouchTribe B.V. <http://www.touchtribe.nl> and is available under the MIT license. See the LICENSE file for more info.
+TTWKActivityIndicator is created by [TouchTribe B.V.](http://www.touchtribe.nl) and is available under the MIT license. See the LICENSE file for more info.
