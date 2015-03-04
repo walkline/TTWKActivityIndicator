@@ -30,7 +30,7 @@ To use with your WatchKit extension:
         	// ...
         }
 
-  - that's it.
+ - that's it.
 
 You can also check out the example project in `./Example/ActivityIndicator.xcodeproj`, header files have plenty of comments as well.
 
