@@ -1,14 +1,3 @@
 source 'https://github.com/CocoaPods/Specs.git'
 
-target 'TTWKActivityIndicator', :exclusive => true do
-  pod "TTWKActivityIndicator", :path => "../"
-end
-
-target 'Tests', :exclusive => true do
-  pod "TTWKActivityIndicator", :path => "../"
-
-  pod 'Specta'
-  pod 'Expecta'
-  pod 'FBSnapshotTestCase'
-  pod 'Expecta+Snapshots'
-end
+pod "TTWKActivityIndicator", :path => "../"  
