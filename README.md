@@ -39,7 +39,7 @@ You can also check out the example project in `./Example/ActivityIndicator.xcode
 TTWKActivityIndicator is available through [CocoaPods](http://cocoapods.org). To install
 it, simply add the following line to your Podfile:
 
-    pod "TTWKActivityIndicator"
+    pod 'TTWKActivityIndicator'
 
 You can also just drop in `/Pod/Classes/TTWKActivityIndicator.*` into your project (along with `/Pod/Classes/TTWKActivityIndicatorView.*` in case you need it a normal iOS app as well).
 
