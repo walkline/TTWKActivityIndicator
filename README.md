@@ -1,9 +1,11 @@
 # TTWKActivityIndicator
 
-A drop-in component that simplifies creating of AppleWatch-style activity animations at run time in both 
+A drop-in component that simplifies creating of Apple Watch activity animations at run time in both 
 regular iOS apps and WatchKit extensions. You can customize the color and the size of the bubbles.
 
-![](screenshot.gif)
+<img src="screenshot.gif" style="width: 119px" />
+
+Note that the Apple Watch simulator from XCode 6.2 displays a different animation now. Hands on videos from Apple's 'Spring Forward' event display this one though.
 
 ## Quick Start
 
