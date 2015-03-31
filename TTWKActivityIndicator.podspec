@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name             = "TTWKActivityIndicator"
-  s.version          = "0.1.0"
+  s.version          = "0.2.0"
   s.summary          = "AppleWatch-style activity indicator."
   s.description      = <<-DESC
                        A drop-in component that simplifies creating of AppleWatch-style activity animations at run time in both 
