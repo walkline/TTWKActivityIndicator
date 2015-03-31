@@ -1,9 +1,9 @@
 Pod::Spec.new do |s|
   s.name             = "TTWKActivityIndicator"
   s.version          = "0.2.0"
-  s.summary          = "AppleWatch-style activity indicator."
+  s.summary          = "Apple Watch-style activity indicator."
   s.description      = <<-DESC
-                       A drop-in component that simplifies creating of AppleWatch-style activity animations at run time in both 
+                       A drop-in component that simplifies creating of Apple Watch-style activity animations at run time in both 
                        regular iOS apps and WatchKit extensions. You can customize the color and the size of the bubbles.
                        DESC
   s.homepage         = 'https://github.com/touchtribe/TTWKActivityIndicator'
