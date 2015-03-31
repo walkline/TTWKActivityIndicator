@@ -73,6 +73,17 @@
 @end
 
 /** 
+ * WKInterfaceGroup should have the same shortcuts as the WKInterfaceImage.
+ */
+@interface WKInterfaceGroup (TTWKActivityIndicator)
+
+- (void)setActivityIndicatorImageWithColor:(UIColor *)color bubbleRadius:(CGFloat)bubbleRadius;
+
+- (void)setActivityIndicatorImageWithColor:(UIColor *)color;
+
+@end
+
+/** 
  * The stuff that is not interested for normal use cases.
  */
 @interface TTWKActivityIndicator (Subclasses)

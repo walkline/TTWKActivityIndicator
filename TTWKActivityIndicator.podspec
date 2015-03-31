@@ -13,7 +13,7 @@ Pod::Spec.new do |s|
   s.source           = { :git => "https://github.com/touchtribe/TTWKActivityIndicator.git", :tag => s.version.to_s }
   # s.social_media_url = 'https://twitter.com/<TWITTER_USERNAME>'
   
-  s.platform     = :ios, '8.2'
+  s.platform     = :ios, '5.1'
   s.requires_arc = true
   
   s.frameworks = 'WatchKit'
