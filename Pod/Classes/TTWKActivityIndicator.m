@@ -30,6 +30,7 @@
 - (CGFloat)brightnessForBubbleWithIndex:(NSInteger)index time:(NSTimeInterval)time;
 - (CGFloat)angleForBubbleWithIndex:(NSInteger)index time:(NSTimeInterval)time;
 - (CGFloat)scaleForRadiusOfBubbleWithIndex:(NSInteger)index time:(NSTimeInterval)time;
+- (CGFloat)offsetForBubbleWithIndex:(NSInteger)index time:(NSTimeInterval)time;
 
 @end
 
@@ -87,6 +88,11 @@
 	return sqrt([self brightnessForBubbleWithIndex:index time:time]);
 }
 
+- (CGFloat)offsetForBubbleWithIndex:(NSInteger)index time:(NSTimeInterval)time {
+	// No extra offsets for beta-style animations
+	return 0;
+}
+
 @end
 
 /** 
@@ -117,17 +123,21 @@
 	return roundf([self loopDuration] * frameRate);
 }
 
+- (NSTimeInterval)internalTimeForBubbleWithIndex:(NSInteger)index time:(NSTimeInterval)time {
+	NSTimeInterval t = time - 0.5 * index / 3;
+	t = fabs(t - floor(t) - 0.5) / 0.5;
+	// TODO: maybe a bit of ease in/out here would look good?
+	return t;
+}
+
 - (CGFloat)brightnessForBubbleWithIndex:(NSInteger)index time:(NSTimeInterval)time {
 
 	// The brightness is just linearly pulsing
-	// TODO: a bit of ease in/out could be appropriate here
 
-	NSTimeInterval t = time - 0.5 * index / 3;
-	t = fabs(t - floor(t) - 0.5) / 0.5;
+	NSTimeInterval t = [self internalTimeForBubbleWithIndex:index time:time];
 
 	const CGFloat minBrightness = 0.3;
 	const CGFloat maxBrightness = 1;
-
 	return minBrightness * (1 - t) + maxBrightness * t;
 }
 
@@ -139,6 +149,11 @@
 - (CGFloat)scaleForRadiusOfBubbleWithIndex:(NSInteger)index time:(NSTimeInterval)time {
 	// Radius of bubbles never changes (although it appears to be due to the brightness change)
 	return 1;
+}
+
+- (CGFloat)offsetForBubbleWithIndex:(NSInteger)index time:(NSTimeInterval)time {
+	// In the modern animation the bubbles shift a bit from the center
+	return 0.5 * (1 - [self internalTimeForBubbleWithIndex:index time:time]);
 }
 
 @end
@@ -231,7 +246,7 @@
 		CGFloat r = [_config scaleForRadiusOfBubbleWithIndex:i time:time] * _bubbleRadius;
 
 		// Distance to the bubble's center from our center, +1 allows some distance between bubbles, so they don't stick
-		CGFloat distanceToBubbleCenter = 2 * r + 1;
+		CGFloat distanceToBubbleCenter = 2 * r + 1 + [_config offsetForBubbleWithIndex:i time:time] * _bubbleRadius / 4;
 
 		// OK, let's draw the bubble
 		[_color setFill];
