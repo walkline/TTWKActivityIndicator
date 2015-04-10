@@ -3,7 +3,7 @@
 A drop-in component that simplifies creating of Apple Watch activity animations at run time in both 
 regular iOS apps and WatchKit extensions. You can customize the color and the size of the bubbles.
 
-<img src="screenshot.gif" style="width: 119px" />
+<img src="screenshot.gif" style="width: 155px" />
 
 It supports both the current style animation and the old one (seen in the betas of the Apple Watch simulator).
 

@@ -126,13 +126,13 @@
 - (NSTimeInterval)internalTimeForBubbleWithIndex:(NSInteger)index time:(NSTimeInterval)time {
 	NSTimeInterval t = time - 0.5 * index / 3;
 	t = fabs(t - floor(t) - 0.5) / 0.5;
-	// TODO: maybe a bit of ease in/out here would look good?
 	return t;
 }
 
 - (CGFloat)brightnessForBubbleWithIndex:(NSInteger)index time:(NSTimeInterval)time {
 
 	// The brightness is just linearly pulsing
+	// TODO: maybe a bit of ease in/out here would look good?
 
 	NSTimeInterval t = [self internalTimeForBubbleWithIndex:index time:time];
 
