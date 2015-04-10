@@ -8,13 +8,13 @@
 
 /* Begin PBXBuildFile section */
 		3B259211C7839BC9C90B4287 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A1AB25A6FAD00663634570C3 /* libPods.a */; };
-		EDB41B187EB7160277F81854 /* libPods-ActivityIndicator WatchKit Extension.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B4CF183021075A059B79E887 /* libPods-ActivityIndicator WatchKit Extension.a */; };
 		F237AE1D1AA759C0003A8A04 /* InterfaceController.m in Sources */ = {isa = PBXBuildFile; fileRef = F237AE1C1AA759C0003A8A04 /* InterfaceController.m */; };
 		F237AE1F1AA759C0003A8A04 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F237AE1E1AA759C0003A8A04 /* Images.xcassets */; };
 		F237AE231AA759C0003A8A04 /* ActivityIndicator WatchKit App.app in Resources */ = {isa = PBXBuildFile; fileRef = F237AE221AA759C0003A8A04 /* ActivityIndicator WatchKit App.app */; };
 		F237AE2B1AA759C0003A8A04 /* Interface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F237AE291AA759C0003A8A04 /* Interface.storyboard */; };
 		F237AE2D1AA759C0003A8A04 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F237AE2C1AA759C0003A8A04 /* Images.xcassets */; };
 		F237AE301AA759C0003A8A04 /* ActivityIndicator WatchKit Extension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = F237AE171AA759C0003A8A04 /* ActivityIndicator WatchKit Extension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		F26DE3E51AD5598D00DFE0FE /* libPods-TTWKActivityIndicator.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F26DE3E41AD5598D00DFE0FE /* libPods-TTWKActivityIndicator.a */; };
 		F2F5559B1AA4A11A0003390A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = F2F5559A1AA4A11A0003390A /* main.m */; };
 		F2F5559E1AA4A11A0003390A /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = F2F5559D1AA4A11A0003390A /* AppDelegate.m */; };
 		F2F555A11AA4A11A0003390A /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F2F555A01AA4A11A0003390A /* ViewController.m */; };
@@ -78,6 +78,7 @@
 		F237AE281AA759C0003A8A04 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		F237AE2A1AA759C0003A8A04 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Interface.storyboard; sourceTree = "<group>"; };
 		F237AE2C1AA759C0003A8A04 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
+		F26DE3E41AD5598D00DFE0FE /* libPods-TTWKActivityIndicator.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libPods-TTWKActivityIndicator.a"; path = "Pods/../build/Debug-iphoneos/libPods-TTWKActivityIndicator.a"; sourceTree = "<group>"; };
 		F2F555951AA4A11A0003390A /* ActivityIndicator.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ActivityIndicator.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F2F555991AA4A11A0003390A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		F2F5559A1AA4A11A0003390A /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -98,7 +99,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				EDB41B187EB7160277F81854 /* libPods-ActivityIndicator WatchKit Extension.a in Frameworks */,
+				F26DE3E51AD5598D00DFE0FE /* libPods-TTWKActivityIndicator.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -123,6 +124,7 @@
 		74A01015574E57246372E09C /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				F26DE3E41AD5598D00DFE0FE /* libPods-TTWKActivityIndicator.a */,
 				A1AB25A6FAD00663634570C3 /* libPods.a */,
 				B4CF183021075A059B79E887 /* libPods-ActivityIndicator WatchKit Extension.a */,
 			);
@@ -614,6 +616,11 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = ActivityIndicator/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				OTHER_LDFLAGS = (
+					"$(inherited)",
+					"-ObjC",
+					"-l\"Pods-TTWKActivityIndicator\"",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
@@ -625,6 +632,11 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = ActivityIndicator/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				OTHER_LDFLAGS = (
+					"$(inherited)",
+					"-ObjC",
+					"-l\"Pods-TTWKActivityIndicator\"",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;

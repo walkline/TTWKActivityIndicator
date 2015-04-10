@@ -5,34 +5,33 @@ regular iOS apps and WatchKit extensions. You can customize the color and the si
 
 <img src="screenshot.gif" style="width: 119px" />
 
-Note that the Apple Watch simulator from XCode 6.2 displays a different animation now. Hands on videos from Apple's 'Spring Forward' event display this one though.
+It supports both the current style animation and the old one (seen in the betas of the Apple Watch simulator).
 
 ## Quick Start
 
 To use with your WatchKit extension:
 
- - add a WKInterfaceImage into your storyboard exactly where you want the activity indicator;
+ - add a WKInterfaceImage into your storyboard exactly where you want the activity indicator to appear (WKInterfaceGroup can be used as well);
  
  - make sure its Mode is set to 'Center' and Width and Height to 'Size To Fit Content';
  
- - connect the image with a corresponding property in your subclass of WKInterfaceController;
+ - connect the image with a corresponding property of your subclass of WKInterfaceController;
  
  - import TTWKActivityIndicator.h;
  
- - add a call to setActivityIndicatorImageWithColor within your awakeWithContext: method, for example:
+ - create an instance of `TTWKActivityIndicator` within your awakeWithContext: method, for example:
+ 
+    // This will create it with the default style and size
+    TTWKActivityIndicator *indicator = [[TTWKActivityIndicator alloc]
+	    initWithColor:[UIColor colorWithRed:0.9922 green:0.4549 blue:0.0000 alpha:1.0]
+    ];
+ 
+ - then transfer it into your image using `setToGroupOrImage:` method:
+ 
+     // Assuming self.activityIndicator is an instance of WKInterfaceImage or WKInterfaceGroup
+     [indicator setToGroupOrImage:self.activityIndicator];
 
-        @property (nonatomic, weak) IBOutlet WKInterfaceImage *activityIndicator;
-        // ...	
-        - (void)awakeWithContext:(id)context {
-        	// ...
-            // Let's have a red activity animation
-        	[self.activityIndicatorImage 
-        		setActivityIndicatorImageWithColor:[UIColor colorWithRed:0.8588 green:0.0196 blue:0.0706 alpha:1.0]
-        	];
-        	// ...
-        }
-
- - that's it.
+ - done!
 
 You can also check out the example project in `./Example/ActivityIndicator.xcodeproj`, header files have plenty of comments as well.
 

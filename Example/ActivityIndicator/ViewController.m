@@ -22,10 +22,8 @@
 	[super viewDidLoad];
 
 	// This is for comparison with a prerendered 30fps animation (similar to what would be used with WatchKit)
-	self.imageView.image = [TTWKActivityIndicator
-		animatedImageWithColor:self.activityIndicatorView.color
-		bubbleRadius:self.activityIndicatorView.bubbleRadius
-	];
+	TTWKActivityIndicator *indicator = [[TTWKActivityIndicator alloc] initWithColor:self.activityIndicatorView.color bubbleRadius:self.activityIndicatorView.bubbleRadius];
+	self.imageView.image = [indicator animatedImage];
 }
 
 - (IBAction)restartAnimation:(id)sender {

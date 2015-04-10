@@ -11,61 +11,134 @@
 #import <WatchKit/WatchKit.h>
 
 /** 
- * To hold the visual constants in a single place. 
+ * This is to hold the differences between indicators of different styles.
  */
-@interface TTWKActivityIndicatorConfig : NSObject
-
-/** Speed of rotation of the bubbles, full revolutions per second. */
-@property (nonatomic, readonly) CGFloat rotationSpeed;
-
-/** Time it takes for a single bubble to completely light up. */
-@property (nonatomic, readonly) CGFloat risingTime;
-
-/** How much rising of a single bubble is delayed depending on its index. */
-@property (nonatomic, readonly) CGFloat risingDelay;
+@protocol TTWKActivityIndicatorConfig <NSObject>
 
 /** When the looped part of the animation starts. */
-@property (nonatomic, readonly) NSTimeInterval loopStartTime;
+- (NSTimeInterval)loopStartTime;
 
-/** How long does it take. */
-@property (nonatomic, readonly) NSTimeInterval loopDuration;
+/** How long the looped part of the animation is. */
+- (NSTimeInterval)loopDuration;
 
-/** Default frame rate to use in animatedImage. */
-@property (nonatomic, readonly) CGFloat defaultFrameRate;
+/** Number of frames the looped part of the animation will occopy for the given frame rate (frames per second). */
+- (NSInteger)numberOfFramesForFrameRate:(CGFloat)frameRate;
 
-/** Number of frames in the looped part of the animation (assuming default frame rate). */
-@property (nonatomic, readonly) NSInteger defaultNumberOfFrames;
+//
+// These 3 methods define what happens to the angle, brightness and scale of bubbles over time
+//
+- (CGFloat)brightnessForBubbleWithIndex:(NSInteger)index time:(NSTimeInterval)time;
+- (CGFloat)angleForBubbleWithIndex:(NSInteger)index time:(NSTimeInterval)time;
+- (CGFloat)scaleForRadiusOfBubbleWithIndex:(NSInteger)index time:(NSTimeInterval)time;
 
 @end
 
-@implementation TTWKActivityIndicatorConfig
+/** 
+ * Defines how the indicator was animated in Apple Watch betas.
+ */
+@interface TTWKActivityIndicatorConfigBeta : NSObject <TTWKActivityIndicatorConfig>
+@end
 
-+ (instancetype)default {
-	return [[self alloc] init];
+@implementation TTWKActivityIndicatorConfigBeta {
+	CGFloat _rotationSpeed;
+	CGFloat _risingTime;
+	CGFloat _risingDelay;
 }
 
 - (instancetype)init {
+
 	if (self = [super init]) {
 
-		// Default values, doubt they should be changable at runtime
+		// Revolutions per second
 		_rotationSpeed = 2.0 / 3;
+
 		_risingTime = (1.0 / 6) / _rotationSpeed;
+
 		_risingDelay = 1.0 / 30;
-
-		// Let's start it from the second revolution to ensure no fading in animation is captured
-		_loopStartTime = 2 / _rotationSpeed;
-
-		// In theory we can just divide it by 6 — the image is symmetrical, but in practice
-		// it's better to have the full cycle, it's just smoother
-		_loopDuration = 1 / _rotationSpeed;
-
-		// Should not be more than 30 frames per second, Apple Watch simulator does not use more
-		_defaultFrameRate = 30;
-
-		_defaultNumberOfFrames = roundf(_loopDuration * _defaultFrameRate);
 	}
 
 	return self;
+}
+
+- (NSTimeInterval)loopStartTime {
+	// Let's start it from the second revolution to ensure no fading in animation is captured
+	return 2 / _rotationSpeed;
+}
+
+- (NSTimeInterval)loopDuration {
+	// In theory we can just divide it by 6 — the image is symmetrical, but in practice
+	// it's better to have the full cycle so it's smoother
+	return 1 / _rotationSpeed;
+}
+
+- (NSInteger)numberOfFramesForFrameRate:(CGFloat)frameRate {
+	return roundf([self loopDuration] * frameRate);
+}
+
+- (CGFloat)brightnessForBubbleWithIndex:(NSInteger)index time:(NSTimeInterval)time {
+	return MAX(0, MIN((time - _risingDelay * index) / _risingTime, 1));
+}
+
+- (CGFloat)angleForBubbleWithIndex:(NSInteger)index time:(NSTimeInterval)time {
+	return time * _rotationSpeed * 2 * M_PI + index * 2 * M_PI / 6 - M_PI / 2;
+}
+
+- (CGFloat)scaleForRadiusOfBubbleWithIndex:(NSInteger)index time:(NSTimeInterval)time {
+	return sqrt([self brightnessForBubbleWithIndex:index time:time]);
+}
+
+@end
+
+/** 
+ * Settings for the modern indicator.
+ */
+@interface TTWKActivityIndicatorConfigModern : NSObject <TTWKActivityIndicatorConfig>
+@end
+
+@implementation TTWKActivityIndicatorConfigModern
+
+- (instancetype)init {
+	if (self = [super init]) {
+	}
+	return self;
+}
+
+- (NSTimeInterval)loopStartTime {
+	// This one starts with time 0, there is no initial sequence that is different from the looped part
+	return 0;
+}
+
+- (NSTimeInterval)loopDuration {
+	// Exactly single revolution per second
+	return 1;
+}
+
+- (NSInteger)numberOfFramesForFrameRate:(CGFloat)frameRate {
+	return roundf([self loopDuration] * frameRate);
+}
+
+- (CGFloat)brightnessForBubbleWithIndex:(NSInteger)index time:(NSTimeInterval)time {
+
+	// The brightness is just linearly pulsing
+	// TODO: a bit of ease in/out could be appropriate here
+
+	NSTimeInterval t = time - 0.5 * index / 3;
+	t = fabs(t - floor(t) - 0.5) / 0.5;
+
+	const CGFloat minBrightness = 0.3;
+	const CGFloat maxBrightness = 1;
+
+	return minBrightness * (1 - t) + maxBrightness * t;
+}
+
+- (CGFloat)angleForBubbleWithIndex:(NSInteger)index time:(NSTimeInterval)time {
+	// For this style the angle always stays the same
+	return index * 2 * M_PI / 6 - M_PI / 2;;
+}
+
+- (CGFloat)scaleForRadiusOfBubbleWithIndex:(NSInteger)index time:(NSTimeInterval)time {
+	// Radius of bubbles never changes (although it appears to be due to the brightness change)
+	return 1;
 }
 
 @end
@@ -76,8 +149,9 @@
 //
 @implementation TTWKActivityIndicator {
 
-	// Rarely adjustable settings
-	TTWKActivityIndicatorConfig *_config;
+	TTWKActivityIndicatorStyle _style;
+
+	id<TTWKActivityIndicatorConfig> _config;
 
 	// Radius of a single bubble
 	CGFloat _bubbleRadius;
@@ -86,38 +160,51 @@
 	UIColor *_color;
 }
 
-+ (NSString *)cacheKeyForColor:(UIColor *)color bubbleRadius:(CGFloat)bubbleRadius {
++ (id<TTWKActivityIndicatorConfig>)configForStyle:(TTWKActivityIndicatorStyle)style {
 
-	NSMutableString *key = [[NSMutableString alloc] init];
-	[key appendFormat:@"%@-%.1f", self, bubbleRadius];
+	switch (style) {
 
-	const CGFloat *c = CGColorGetComponents(color.CGColor);
-	for (NSInteger i = 0; i < CGColorGetNumberOfComponents(color.CGColor); i++) {
-		[key appendFormat:@"-%.2f", c[i]];
+		case TTWKActivityIndicatorStyleModern:
+			return [[TTWKActivityIndicatorConfigModern alloc] init];
+
+		case TTWKActivityIndicatorStyleBeta:
+			return [[TTWKActivityIndicatorConfigBeta alloc] init];
+
+		default:
+			NSAssert(NO, @"");
+			return nil;
 	}
-
-	return key;
 }
 
-+ (UIImage *)animatedImageWithColor:(UIColor *)color bubbleRadius:(CGFloat)bubbleRadius {
-	TTWKActivityIndicator *a = [[self alloc] initWithColor:color bubbleRadius:bubbleRadius];
-	return [a animatedImage];
++ (CGFloat)defaultFrameRate {
+	return 30;
 }
 
-+ (UIImage *)animatedImageWithColor:(UIColor *)color {
-	return [self animatedImageWithColor:color bubbleRadius:0];
-}
-
-- (id)initWithColor:(UIColor *)color bubbleRadius:(CGFloat)bubbleRadius {
+- (id)initWithStyle:(TTWKActivityIndicatorStyle)style color:(UIColor *)color bubbleRadius:(CGFloat)bubbleRadius {
 
 	if (self = [super init]) {
-		_config = [TTWKActivityIndicatorConfig default];
+
+		_style = style;
+
+		_config = [TTWKActivityIndicator configForStyle:_style];
+
 		_bubbleRadius = bubbleRadius > 0 ? bubbleRadius : 4;
+
 		_color = color;
 	}
 
 	return self;
 }
+
+- (id)initWithColor:(UIColor *)color bubbleRadius:(CGFloat)bubbleRadius {
+	return [self initWithStyle:TTWKActivityIndicatorStyleDefault color:color bubbleRadius:bubbleRadius];
+}
+
+- (id)initWithColor:(UIColor *)color {
+	return [self initWithStyle:TTWKActivityIndicatorStyleDefault color:color bubbleRadius:0];
+}
+
+#pragma mark -
 
 - (CGSize)size {
 	CGFloat radius = 3 * 2 * (_bubbleRadius + 1);
@@ -135,39 +222,44 @@
 	for (NSInteger i = 0; i < 6; i++) {
 
 		// How big and light the current bubble is
-		CGFloat brightness = MAX(0, MIN((time - _config.risingDelay * i) / _config.risingTime, 1));
+		CGFloat brightness = [_config brightnessForBubbleWithIndex:i time:time];
 
 		// Current angle of the bubble
-		CGFloat angle = time * _config.rotationSpeed * 2 * M_PI + i * 2 * M_PI / 6 - M_PI / 2;
+		CGFloat angle = [_config angleForBubbleWithIndex:i time:time];
 
-		// Current radius of the bubble (sqrt ensures the square of the bubble grows linearly)
-		CGFloat r = _bubbleRadius * sqrt(brightness);
+		// Current radius of the bubble (sqrt ensures the area of the bubble grows linearly)
+		CGFloat r = [_config scaleForRadiusOfBubbleWithIndex:i time:time] * _bubbleRadius;
 
 		// Distance to the bubble's center from our center, +1 allows some distance between bubbles, so they don't stick
 		CGFloat distanceToBubbleCenter = 2 * r + 1;
-		CGPoint bubbleCenter = CGPointMake(
-			center.x + distanceToBubbleCenter * cos(angle),
-			center.y + distanceToBubbleCenter * sin(angle)
-		);
 
 		// OK, let's draw the bubble
 		[_color setFill];
 		CGContextSetAlpha(c, brightness);
+
+		CGPoint bubbleCenter = CGPointMake(
+			center.x + distanceToBubbleCenter * cos(angle),
+			center.y + distanceToBubbleCenter * sin(angle)
+		);
 		CGContextFillEllipseInRect(c, CGRectMake(bubbleCenter.x - r, bubbleCenter.y - r, 2 * r, 2 * r));
 	}
 }
 
 - (NSTimeInterval)loopStartTime {
-	return _config.loopStartTime;
+	return [_config loopStartTime];
 }
 
 - (NSTimeInterval)loopDuration {
-	return _config.loopDuration;
+	return [_config loopDuration];
 }
 
 - (UIImage *)animatedImage {
+	return [self animatedImageForFrameRate:[TTWKActivityIndicator defaultFrameRate]];
+}
 
-	NSInteger totalFrames = _config.defaultNumberOfFrames;
+- (UIImage *)animatedImageForFrameRate:(CGFloat)frameRate {
+
+	NSInteger totalFrames = [_config numberOfFramesForFrameRate:frameRate];
 
 	NSMutableArray *images = [[NSMutableArray alloc] init];
 	for (NSInteger frame = 0; frame < totalFrames; frame++) {
@@ -187,12 +279,27 @@
 	return [UIImage animatedImageWithImages:images duration:[self loopDuration]];
 }
 
-+ (void)setCachedWithBlock:(void (^)(NSString *name, UIImage *image))block
-	color:(UIColor *)color
-	bubbleRadius:(CGFloat)bubbleRadius
-{
+#pragma mark -
 
-	NSString *cacheKey = [TTWKActivityIndicator cacheKeyForColor:color bubbleRadius:bubbleRadius];
+- (NSString *)cacheKey {
+
+	// Sort of a version of the class, to ensure cached version won't be used when the code is updated
+	const long version = 2;
+
+	NSMutableString *key = [[NSMutableString alloc] init];
+	[key appendFormat:@"%@%ld-%ld-%.1f", self, version, (long)_style, _bubbleRadius];
+
+	const CGFloat *c = CGColorGetComponents(_color.CGColor);
+	for (NSInteger i = 0; i < CGColorGetNumberOfComponents(_color.CGColor); i++) {
+		[key appendFormat:@"-%.2f", c[i]];
+	}
+
+	return key;
+}
+
+- (void)setCachedWithBlock:(void (^)(NSString *name, UIImage *image))block {
+
+	NSString *cacheKey = [self cacheKey];
 
 	if ([[WKInterfaceDevice currentDevice].cachedImages objectForKey:cacheKey]) {
 
@@ -203,12 +310,7 @@
 
 		// Not cached yet, let's build the image, cache and upload
 
-		TTWKActivityIndicator *indicator = [[TTWKActivityIndicator alloc]
-			initWithColor:color
-			bubbleRadius:bubbleRadius
-		];
-
-		UIImage *image = [indicator animatedImage];
+		UIImage *image = [self animatedImage];
 
 		if ([[WKInterfaceDevice currentDevice] addCachedImage:image name:cacheKey]) {
 			// Was able to add it into the cache, let's use it
@@ -220,72 +322,55 @@
 	}
 }
 
-@end
+- (void)setToGroupOrImage:(WKInterfaceObject *)groupOrImage {
 
-//
-// TODO: merge this with WKInterfaceGroup category, they are almost identical
-//
-@implementation WKInterfaceImage (TTWKActivityIndicator)
+	if ([groupOrImage isKindOfClass:[WKInterfaceGroup class]]) {
 
-- (void)setActivityIndicatorImageWithColor:(UIColor *)color {
-	[self setActivityIndicatorImageWithColor:color bubbleRadius:0];
-}
+		WKInterfaceGroup *group = (WKInterfaceGroup *)groupOrImage;
 
-- (void)setActivityIndicatorImageWithColor:(UIColor *)color bubbleRadius:(CGFloat)bubbleRadius {
-
-	[TTWKActivityIndicator
-		setCachedWithBlock:^(NSString *name, UIImage *image) {
-			if (name) {
-				[self setImageNamed:name];
-			} else if (image) {
-				[self setImage:image];
+		[self
+			setCachedWithBlock:^(NSString *name, UIImage *image) {
+				if (name) {
+					[group setBackgroundImageNamed:name];
+				} else if (image) {
+					[group setBackgroundImage:image];
+				}
 			}
-		}
-		color:color
-		bubbleRadius:bubbleRadius
-	];
+		];
 
-	// We also need to ensure here that the animation has started, so no extra lines are required by the user.
-	// Note that we are not using startAnimation method, which has a bug in that it plays any animation on max speed
-	TTWKActivityIndicatorConfig *config = [TTWKActivityIndicatorConfig default];
-	[self
-		startAnimatingWithImagesInRange:NSMakeRange(0, config.defaultNumberOfFrames)
-		duration:config.loopDuration
-		repeatCount:0
-	];
-}
+		// We also need to ensure here that the animation has started, so no extra lines are required by the user.
+		// Note that we are not using startAnimation method, which has a bug in that it plays any animation on max speed
+		[group
+			startAnimatingWithImagesInRange:NSMakeRange(0, [_config numberOfFramesForFrameRate:[TTWKActivityIndicator defaultFrameRate]])
+			duration:[_config loopDuration]
+			repeatCount:0
+		];
 
-@end
+	} else if ([groupOrImage isKindOfClass:[WKInterfaceImage class]]) {
 
-//
-//
-//
-@implementation WKInterfaceGroup (TTWKActivityIndicator)
-
-- (void)setActivityIndicatorImageWithColor:(UIColor *)color {
-	[self setActivityIndicatorImageWithColor:color bubbleRadius:0];
-}
-
-- (void)setActivityIndicatorImageWithColor:(UIColor *)color bubbleRadius:(CGFloat)bubbleRadius {
-
-	[TTWKActivityIndicator
-		setCachedWithBlock:^(NSString *name, UIImage *image) {
-			if (name) {
-				[self setBackgroundImageNamed:name];
-			} else if (image) {
-				[self setBackgroundImage:image];
+		//
+		// Well, it's the same process for WKInterfaceImage, just a few different method names
+		//
+		WKInterfaceImage *image = (WKInterfaceImage *)groupOrImage;
+		[self
+			setCachedWithBlock:^(NSString *name, UIImage *img) {
+				if (name) {
+					[image setImageNamed:name];
+				} else if (image) {
+					[image setImage:img];
+				}
 			}
-		}
-		color:color
-		bubbleRadius:bubbleRadius
-	];
+		];
+		[image
+			startAnimatingWithImagesInRange:NSMakeRange(0, [_config numberOfFramesForFrameRate:[TTWKActivityIndicator defaultFrameRate]])
+			duration:_config.loopDuration
+			repeatCount:0
+		];
 
-	TTWKActivityIndicatorConfig *config = [TTWKActivityIndicatorConfig default];
-	[self
-		startAnimatingWithImagesInRange:NSMakeRange(0, config.defaultNumberOfFrames)
-		duration:config.loopDuration
-		repeatCount:0
-	];
+	} else {
+
+		NSAssert(NO, @"%s expects either WKInterfaceGroup or WKInterfaceImage passed to it", sel_getName(_cmd));
+	}
 }
 
 @end

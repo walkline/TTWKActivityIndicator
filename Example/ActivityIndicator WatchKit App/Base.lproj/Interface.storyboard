@@ -1,27 +1,43 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder.WatchKit.Storyboard" version="3.0" toolsVersion="6750" systemVersion="13F34" targetRuntime="watchKit" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="AgC-eL-Hgc">
+<document type="com.apple.InterfaceBuilder.WatchKit.Storyboard" version="3.0" toolsVersion="6751" systemVersion="14C109" targetRuntime="watchKit" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="AgC-eL-Hgc">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6735"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6736"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBWatchKitPlugin" version="3737"/>
     </dependencies>
     <scenes>
-        <!--TTWKActivityIndicator-->
+        <!--Interface Controller-->
         <scene sceneID="aou-V4-d1y">
             <objects>
-                <controller title="TTWKActivityIndicator" id="AgC-eL-Hgc" customClass="InterfaceController">
+                <controller id="AgC-eL-Hgc" customClass="InterfaceController">
                     <items>
-                        <label width="1" alignment="center" verticalAlignment="center" text="Normal:" textAlignment="center" id="Fe7-M2-cA0">
-                            <fontDescription key="font" style="UICTFontTextStyleFootnote"/>
-                        </label>
-                        <imageView alignment="center" verticalAlignment="center" contentMode="center" id="KvL-F2-3JG" userLabel="Activity Indicator"/>
-                        <label width="1" alignment="center" verticalAlignment="center" text="Smaller:" textAlignment="center" id="tLe-dq-PzL" userLabel="Smaller:">
-                            <fontDescription key="font" style="UICTFontTextStyleFootnote"/>
-                        </label>
-                        <imageView alignment="center" verticalAlignment="center" contentMode="center" id="bry-GE-sgY" userLabel="Activity Indicator"/>
+                        <group alignment="center" verticalAlignment="center" layout="vertical" spacing="6" id="5Yb-cA-xev">
+                            <items>
+                                <label alignment="center" text="Normal size:" textAlignment="center" id="Fe7-M2-cA0">
+                                    <fontDescription key="font" style="UICTFontTextStyleFootnote"/>
+                                </label>
+                                <group alignment="center" spacing="10" id="0hh-aK-eZl">
+                                    <items>
+                                        <imageView alignment="center" verticalAlignment="center" contentMode="center" id="KvL-F2-3JG" userLabel="Modern"/>
+                                        <imageView alignment="center" verticalAlignment="center" contentMode="center" id="iyi-oI-gSM" userLabel="Beta"/>
+                                    </items>
+                                </group>
+                                <label alignment="center" text="or smaller:" textAlignment="center" id="tLe-dq-PzL" userLabel="Smaller:">
+                                    <fontDescription key="font" style="UICTFontTextStyleFootnote"/>
+                                </label>
+                                <group alignment="center" spacing="10" id="eGl-r4-pfU">
+                                    <items>
+                                        <imageView alignment="center" verticalAlignment="center" id="RYe-jO-hgF" userLabel="Beta"/>
+                                        <imageView alignment="center" verticalAlignment="center" contentMode="center" id="bry-GE-sgY" userLabel="Modern"/>
+                                    </items>
+                                </group>
+                            </items>
+                        </group>
                     </items>
                     <connections>
                         <outlet property="activityIndicator" destination="KvL-F2-3JG" id="3d1-N9-t6K"/>
+                        <outlet property="activityIndicatorBeta" destination="iyi-oI-gSM" id="OH6-gQ-gTA"/>
                         <outlet property="smallerActivityIndicator" destination="bry-GE-sgY" id="0Ur-Ii-9ty"/>
+                        <outlet property="smallerActivityIndicatorBeta" destination="RYe-jO-hgF" id="XR0-k6-tUA"/>
                     </connections>
                 </controller>
             </objects>

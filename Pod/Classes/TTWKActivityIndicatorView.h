@@ -8,7 +8,7 @@
 #import <UIKit/UIKit.h>
 
 /**
- * AppleWatch-style activity indicator that can be used with regular iOS apps.
+ * Apple Watch-style activity indicator that can be used with regular iOS apps.
  * (See TTWKActivityIndicator.h on how to use it in WatchKit extensions.)
  *
  * Alternatively you can use regular UIImageView with an animated image received from one 
@@ -20,7 +20,7 @@ IB_DESIGNABLE
 /** Color of the indicator's bubbles. (Note that we always assume alpha to be 1 here.) */
 @property (nonatomic) IBInspectable UIColor *color;
 
-/** Radius of a single bubble. (AppleWatch seems to be using 4.) */
+/** Radius of a single bubble. (Apple Watch seems to be using 4.) */
 @property (nonatomic) IBInspectable CGFloat bubbleRadius;
 
 /** Starts the animation. (Note that the animation is turned on by default.) */

@@ -9,77 +9,81 @@
 #import <WatchKit/WatchKit.h>
 
 /** 
- * Simplifies creating of AppleWatch-style activity animations at run time.
+ * Supported styles of activity indicators: the modern one and the one that was used in beta versions of Apple Watch OS.
+ */
+typedef NS_ENUM(NSInteger, TTWKActivityIndicatorStyle) {
+
+	/** 
+	 * The style closer to the indicator in the current version of the Apple Watch OS,
+	 * the one with the bubbles only pulsing and not rotating around the center.
+	 */
+	TTWKActivityIndicatorStyleModern,
+
+	/** 
+	 * The one with its bubbles rotating around the center, similar to how it was in betas of the Apple Watch simulator 
+	 * (and in hands-on videos from the Spring Forward event).
+	 */
+	TTWKActivityIndicatorStyleBeta,
+
+	/** The style that should be used by default. */
+	TTWKActivityIndicatorStyleDefault = TTWKActivityIndicatorStyleModern
+};
+
+/** 
+ * Simplifies creating of Apple Watch style activity animations at run time, 
+ * so there is no need to store prerendered image in the app's bundle in advance.
  *
- * It's not the actual control, but a helper that is used to prerender a sequence of images 
- * (as a single 'animated' instance of UIImage) which then is fed to WKInterfaceImage.
+ * It still uses the on-device image cache, so rendering will be delayed only the first time
+ * an indicator of a given size/color/style is set.
  *
- * It can also be used in regular iOS apps within drawRect:, in which case the initial 'fade in'
- * sequence can be also animated. (It cannot be used on AppleWatch yet, because there is no way 
- * to loop the animation from a non-first frame.)
+ * It's not the actual control (since you cannot have custom controls on Apple Watch yet), 
+ * but rather a helper that is used to prerender a sequence of images (as a single 'animated' instance of UIImage) 
+ * which then is fed to WKInterfaceImage or as a background image of WKInterfaceGroup.
  *
- * To use it with WatchKit you'll need to add a WKInterfaceImage into your storyboard and then 
- * set its image into something returned by one of the -animatedImage* methods, for example:
+ * The helper can be also be used with regular iOS apps within drawRect:, in which case the initial 'fade in'
+ * sequence can be also animated. (The initial animation sequence cannot be used on Apple Watch yet, 
+ * because there is no way to loop an image animation from a non-first frame.) See TTWKActivityIndicatorView 
+ * in this pod for an implementation suitable for normal iOS apps.
+ *
+ * To use this helper with WatchKit you'll need to add a WKInterfaceImage or WKInterfaceGroup into your storyboard
+ * (this is where the indicator will appear), then create an instance of TTWKActivityIndicator and use its 
+ * setToGroupOrImage: method to transfer the animated image. For example (assuming self.activityIndicator is 
+ * WKInterfaceGroup or WKInterfaceImage in your controller):
  *
  * \begincode
- *     [self.activityIndicatorImage
- *         setImage:[TTWKActivityIndicator
- *             animatedImageWithColor:[UIColor colorWithRed:0.8588 green:0.0196 blue:0.0706 alpha:1.0]
- *         ]
- * 	   ];
- *     [self.activityIndicatorImage startAnimating];
+ * TTWKActivityIndicator *indicator = [[TTWKActivityIndicator alloc]
+ *     initWithColor:[UIColor colorWithRed:1.0000 green:0.8824 blue:0.1020 alpha:1.0]
+ *     bubbleRadius:2
+ * ];
+ * [indicator setToGroupOrImage:self.activityIndicator];
  * \endcode
  *
- * Or better use shortcuts in TTWKActivityIndicator category of WKInterfaceImage, that already
- * use device's image cache:
- *
- * \begincode
- *     [self.activityIndicatorImage 
- *         setActivityIndicatorImageWithColor:[UIColor colorWithRed:0.8588 green:0.0196 blue:0.0706 alpha:1.0]
- *     ];
- * \endcode
+ * Of course the image or group in your storyboard should be of proper size (or have it set to 'size fit the contents')
+ * and it should have approprtiate mode, such as Center.
  */
 @interface TTWKActivityIndicator : NSObject
 
-/** Returns a looped animated image of the AppleWatch-style activity indicator of the given color 
- * and specific radius of a single bubble (if 0, then 4 points is used by default). */
-+ (UIImage *)animatedImageWithColor:(UIColor *)color bubbleRadius:(CGFloat)bubbleRadius;
-
-/** Returns a looped animated image of the AppleWatch-style activity indicator of the default size 
- * and the given color. */
-+ (UIImage *)animatedImageWithColor:(UIColor *)color;
-
-@end
-
 /** 
- * Shortcuts for setting up activity animation over existing instances of WKInterfaceImage.
- * These shortcuts use device's image cache, so it might be better to use them instead of
- * TTWKActivityIndicator directly.
+ * Designated initializer.
+ * Initializes with the style of the indicator, the color of its bubbles and the radius of a single bubble
+ * (set it to 0 to use the default one).
  */
-@interface WKInterfaceImage (TTWKActivityIndicator)
+- (id)initWithStyle:(TTWKActivityIndicatorStyle)style color:(UIColor *)color bubbleRadius:(CGFloat)bubbleRadius;
+
+/** A shortcut initializing the indicator with the default style. */
+- (id)initWithColor:(UIColor *)color bubbleRadius:(CGFloat)bubbleRadius;
+
+/** Another shortcut initializing the indicator with the default style and bubble size. */
+- (id)initWithColor:(UIColor *)color;
 
 /** 
- * Generates AppleWatch-style activity indicator animation of given color and size 
- * as 'animated' UIImage, sets it to the receiver, and then starts the animation.
+ * Sets an animatiton of this activity indicator as a (background) image for the provided 
+ * WKInterfaceGroup or WKInterfaceImage. 
  *
- * Tries to cache the generated image in the device's image cache and reuse it later 
- * (if called with the same parameters of course).
+ * It uses the image cache of Apple Watch, if possible, so subsequent use of the same indicator 
+ * (same by style/color/size, can be a different instance) will be faster.
  */
-- (void)setActivityIndicatorImageWithColor:(UIColor *)color bubbleRadius:(CGFloat)bubbleRadius;
-
-/** A shortcut for [self setActivityIndicatorImageWithColor:color bubbleRadius:0]. */
-- (void)setActivityIndicatorImageWithColor:(UIColor *)color;
-
-@end
-
-/** 
- * WKInterfaceGroup should have the same shortcuts as the WKInterfaceImage.
- */
-@interface WKInterfaceGroup (TTWKActivityIndicator)
-
-- (void)setActivityIndicatorImageWithColor:(UIColor *)color bubbleRadius:(CGFloat)bubbleRadius;
-
-- (void)setActivityIndicatorImageWithColor:(UIColor *)color;
+- (void)setToGroupOrImage:(WKInterfaceObject *)groupOrImage;
 
 @end
 
@@ -87,12 +91,6 @@
  * The stuff that is not interested for normal use cases.
  */
 @interface TTWKActivityIndicator (Subclasses)
-
-/** 
- * Initializes with the color of the bubble and the radius of a single bubble 
- * (set it to 0 to use the default one).
- */
-- (id)initWithColor:(UIColor *)color bubbleRadius:(CGFloat)bubbleRadius;
 
 /** 
  * Draws a single frame of the animation corresponding to the provided time.
@@ -118,10 +116,10 @@
 /** The size of a minimal rect safely enclosing the whole animation. */
 - (CGSize)size;
 
-/** An animated image corresponding to the looped part of the animation. */
-- (UIImage *)animatedImage;
+/** An animated image corresponding to the looped part of the animation at the provided frame rate (frames per second). */
+- (UIImage *)animatedImageForFrameRate:(CGFloat)frameRate;
 
-/** The key that can be used used to store a generated animation in the AppleWatch image cache. */
-+ (NSString *)cacheKeyForColor:(UIColor *)color bubbleRadius:(CGFloat)bubbleRadius;
+/** An animated image corresponding to the looped part of the animation at the default frame rate. */
+- (UIImage *)animatedImage;
 
 @end
