@@ -22,17 +22,17 @@ To use with your WatchKit extension:
  - create an instance of `TTWKActivityIndicator` within your awakeWithContext: method, for example:
 
     ```objective-c
-        // This will create it with the default style and size
-        TTWKActivityIndicator *indicator = [[TTWKActivityIndicator alloc]
-            initWithColor:[UIColor colorWithRed:0.9922 green:0.4549 blue:0.0000 alpha:1.0]
-        ];
+    // This will create it with the default style and size
+    TTWKActivityIndicator *indicator = [[TTWKActivityIndicator alloc]
+        initWithColor:[UIColor colorWithRed:0.9922 green:0.4549 blue:0.0000 alpha:1.0]
+    ];
     ```
 
  - then transfer it into your image using `setToGroupOrImage:` method:
 
     ```objective-c
     // Assuming self.activityIndicator is an instance of WKInterfaceImage or WKInterfaceGroup
-        [indicator setToGroupOrImage:self.activityIndicator];
+    [indicator setToGroupOrImage:self.activityIndicator];
     ```
 
  - done!
