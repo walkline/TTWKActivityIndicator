@@ -477,7 +477,6 @@
 /* Begin XCBuildConfiguration section */
 		F237AE311AA759C0003A8A04 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = BA85DACB28C1335B12012D9B /* Pods.debug.xcconfig */;
 			buildSettings = {
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
@@ -492,7 +491,6 @@
 		};
 		F237AE321AA759C0003A8A04 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 190619AA7CEEABE0714EC8AB /* Pods.release.xcconfig */;
 			buildSettings = {
 				INFOPLIST_FILE = "ActivityIndicator WatchKit Extension/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
@@ -611,7 +609,6 @@
 		};
 		F2F555B91AA4A11A0003390A /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = BA85DACB28C1335B12012D9B /* Pods.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = ActivityIndicator/Info.plist;
@@ -627,7 +624,6 @@
 		};
 		F2F555BA1AA4A11A0003390A /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 190619AA7CEEABE0714EC8AB /* Pods.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = ActivityIndicator/Info.plist;
