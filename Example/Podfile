@@ -1,3 +1,7 @@
 source 'https://github.com/CocoaPods/Specs.git'
 
 pod "TTWKActivityIndicator", :path => "../"  
+
+target "ActivityIndicatorTests" do
+  pod "FBSnapshotTestCase"
+end
