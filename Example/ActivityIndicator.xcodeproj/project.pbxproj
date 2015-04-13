@@ -15,13 +15,6 @@
 		F237AE2B1AA759C0003A8A04 /* Interface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F237AE291AA759C0003A8A04 /* Interface.storyboard */; };
 		F237AE2D1AA759C0003A8A04 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F237AE2C1AA759C0003A8A04 /* Images.xcassets */; };
 		F237AE301AA759C0003A8A04 /* ActivityIndicator WatchKit Extension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = F237AE171AA759C0003A8A04 /* ActivityIndicator WatchKit Extension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
-		F26385771ADBFD4000680C77 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F2F555A01AA4A11A0003390A /* ViewController.m */; };
-		F26385781ADBFD4000680C77 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = F2F5559D1AA4A11A0003390A /* AppDelegate.m */; };
-		F26385791ADBFD4000680C77 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = F2F5559A1AA4A11A0003390A /* main.m */; };
-		F263857B1ADBFD4000680C77 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A1AB25A6FAD00663634570C3 /* libPods.a */; };
-		F263857D1ADBFD4000680C77 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F2F555A21AA4A11A0003390A /* Main.storyboard */; };
-		F263857E1ADBFD4000680C77 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = F2F555A71AA4A11A0003390A /* LaunchScreen.xib */; };
-		F263857F1ADBFD4000680C77 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F2F555A51AA4A11A0003390A /* Images.xcassets */; };
 		F26DE3E51AD5598D00DFE0FE /* libPods-TTWKActivityIndicator.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F26DE3E41AD5598D00DFE0FE /* libPods-TTWKActivityIndicator.a */; };
 		F2F5559B1AA4A11A0003390A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = F2F5559A1AA4A11A0003390A /* main.m */; };
 		F2F5559E1AA4A11A0003390A /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = F2F5559D1AA4A11A0003390A /* AppDelegate.m */; };
@@ -47,12 +40,12 @@
 			remoteGlobalIDString = F237AE161AA759C0003A8A04;
 			remoteInfo = "ActivityIndicator WatchKit Extension";
 		};
-		F26385871ADBFD6D00680C77 /* PBXContainerItemProxy */ = {
+		F26385891ADC02EE00680C77 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = F2F5558D1AA4A11A0003390A /* Project object */;
 			proxyType = 1;
-			remoteGlobalIDString = F26385731ADBFD4000680C77;
-			remoteInfo = ActivityIndicatorTestsHost;
+			remoteGlobalIDString = F2F555941AA4A11A0003390A;
+			remoteInfo = ActivityIndicator;
 		};
 /* End PBXContainerItemProxy section */
 
@@ -64,16 +57,6 @@
 			dstSubfolderSpec = 13;
 			files = (
 				F237AE301AA759C0003A8A04 /* ActivityIndicator WatchKit Extension.appex in Embed App Extensions */,
-			);
-			name = "Embed App Extensions";
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		F26385801ADBFD4000680C77 /* Embed App Extensions */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = "";
-			dstSubfolderSpec = 13;
-			files = (
 			);
 			name = "Embed App Extensions";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -98,9 +81,6 @@
 		F237AE281AA759C0003A8A04 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		F237AE2A1AA759C0003A8A04 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Interface.storyboard; sourceTree = "<group>"; };
 		F237AE2C1AA759C0003A8A04 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
-		F263856E1ADBF64300680C77 /* ActivityIndicator copy-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "ActivityIndicator copy-Info.plist"; path = "/Users/aleh/Projects/TTWKActivityIndicator/Example/ActivityIndicator copy-Info.plist"; sourceTree = "<absolute>"; };
-		F26385851ADBFD4000680C77 /* ActivityIndicator.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ActivityIndicator.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		F26385861ADBFD4000680C77 /* ActivityIndicator copy2-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "ActivityIndicator copy2-Info.plist"; path = "/Users/aleh/Projects/TTWKActivityIndicator/Example/ActivityIndicator copy2-Info.plist"; sourceTree = "<absolute>"; };
 		F26DE3E41AD5598D00DFE0FE /* libPods-TTWKActivityIndicator.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libPods-TTWKActivityIndicator.a"; path = "Pods/../build/Debug-iphoneos/libPods-TTWKActivityIndicator.a"; sourceTree = "<group>"; };
 		F2F555951AA4A11A0003390A /* ActivityIndicator.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ActivityIndicator.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F2F555991AA4A11A0003390A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -123,14 +103,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				F26DE3E51AD5598D00DFE0FE /* libPods-TTWKActivityIndicator.a in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		F263857A1ADBFD4000680C77 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				F263857B1ADBFD4000680C77 /* libPods.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -223,8 +195,6 @@
 				F2F555961AA4A11A0003390A /* Products */,
 				CB2928F40266821BAAF0EFB7 /* Pods */,
 				74A01015574E57246372E09C /* Frameworks */,
-				F263856E1ADBF64300680C77 /* ActivityIndicator copy-Info.plist */,
-				F26385861ADBFD4000680C77 /* ActivityIndicator copy2-Info.plist */,
 			);
 			sourceTree = "<group>";
 		};
@@ -235,7 +205,6 @@
 				F2F555AE1AA4A11A0003390A /* ActivityIndicatorTests.xctest */,
 				F237AE171AA759C0003A8A04 /* ActivityIndicator WatchKit Extension.appex */,
 				F237AE221AA759C0003A8A04 /* ActivityIndicator WatchKit App.app */,
-				F26385851ADBFD4000680C77 /* ActivityIndicator.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -317,24 +286,6 @@
 			productReference = F237AE221AA759C0003A8A04 /* ActivityIndicator WatchKit App.app */;
 			productType = "com.apple.product-type.application.watchapp";
 		};
-		F26385731ADBFD4000680C77 /* ActivityIndicatorTestsHost */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = F26385821ADBFD4000680C77 /* Build configuration list for PBXNativeTarget "ActivityIndicatorTestsHost" */;
-			buildPhases = (
-				F26385761ADBFD4000680C77 /* Sources */,
-				F263857A1ADBFD4000680C77 /* Frameworks */,
-				F263857C1ADBFD4000680C77 /* Resources */,
-				F26385801ADBFD4000680C77 /* Embed App Extensions */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-			);
-			name = ActivityIndicatorTestsHost;
-			productName = ActivityIndicator;
-			productReference = F26385851ADBFD4000680C77 /* ActivityIndicator.app */;
-			productType = "com.apple.product-type.application";
-		};
 		F2F555941AA4A11A0003390A /* ActivityIndicator */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = F2F555B81AA4A11A0003390A /* Build configuration list for PBXNativeTarget "ActivityIndicator" */;
@@ -367,7 +318,7 @@
 			buildRules = (
 			);
 			dependencies = (
-				F26385881ADBFD6D00680C77 /* PBXTargetDependency */,
+				F263858A1ADC02EE00680C77 /* PBXTargetDependency */,
 			);
 			name = ActivityIndicatorTests;
 			productName = ActivityIndicatorTests;
@@ -394,7 +345,7 @@
 					};
 					F2F555AD1AA4A11A0003390A = {
 						CreatedOnToolsVersion = 6.2;
-						TestTargetID = F26385731ADBFD4000680C77;
+						TestTargetID = F2F555941AA4A11A0003390A;
 					};
 				};
 			};
@@ -415,7 +366,6 @@
 				F2F555AD1AA4A11A0003390A /* ActivityIndicatorTests */,
 				F237AE161AA759C0003A8A04 /* ActivityIndicator WatchKit Extension */,
 				F237AE211AA759C0003A8A04 /* ActivityIndicator WatchKit App */,
-				F26385731ADBFD4000680C77 /* ActivityIndicatorTestsHost */,
 			);
 		};
 /* End PBXProject section */
@@ -436,16 +386,6 @@
 			files = (
 				F237AE2B1AA759C0003A8A04 /* Interface.storyboard in Resources */,
 				F237AE2D1AA759C0003A8A04 /* Images.xcassets in Resources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		F263857C1ADBFD4000680C77 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				F263857D1ADBFD4000680C77 /* Main.storyboard in Resources */,
-				F263857E1ADBFD4000680C77 /* LaunchScreen.xib in Resources */,
-				F263857F1ADBFD4000680C77 /* Images.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -510,16 +450,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		F26385761ADBFD4000680C77 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				F26385771ADBFD4000680C77 /* ViewController.m in Sources */,
-				F26385781ADBFD4000680C77 /* AppDelegate.m in Sources */,
-				F26385791ADBFD4000680C77 /* main.m in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		F2F555911AA4A11A0003390A /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -551,10 +481,10 @@
 			target = F237AE161AA759C0003A8A04 /* ActivityIndicator WatchKit Extension */;
 			targetProxy = F237AE2E1AA759C0003A8A04 /* PBXContainerItemProxy */;
 		};
-		F26385881ADBFD6D00680C77 /* PBXTargetDependency */ = {
+		F263858A1ADC02EE00680C77 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = F26385731ADBFD4000680C77 /* ActivityIndicatorTestsHost */;
-			targetProxy = F26385871ADBFD6D00680C77 /* PBXContainerItemProxy */;
+			target = F2F555941AA4A11A0003390A /* ActivityIndicator */;
+			targetProxy = F26385891ADC02EE00680C77 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -639,40 +569,6 @@
 				SKIP_INSTALL = YES;
 				TARGETED_DEVICE_FAMILY = 4;
 				"TARGETED_DEVICE_FAMILY[sdk=iphonesimulator*]" = "1,4";
-			};
-			name = Release;
-		};
-		F26385831ADBFD4000680C77 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = BA85DACB28C1335B12012D9B /* Pods.debug.xcconfig */;
-			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				INFOPLIST_FILE = ActivityIndicator/InfoCI.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				OTHER_LDFLAGS = (
-					"$(inherited)",
-					"-ObjC",
-					"-l\"Pods-TTWKActivityIndicator\"",
-				);
-				PRODUCT_NAME = ActivityIndicator;
-			};
-			name = Debug;
-		};
-		F26385841ADBFD4000680C77 /* Release */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = 190619AA7CEEABE0714EC8AB /* Pods.release.xcconfig */;
-			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				INFOPLIST_FILE = ActivityIndicator/InfoCI.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				OTHER_LDFLAGS = (
-					"$(inherited)",
-					"-ObjC",
-					"-l\"Pods-TTWKActivityIndicator\"",
-				);
-				PRODUCT_NAME = ActivityIndicator;
 			};
 			name = Release;
 		};
@@ -803,7 +699,7 @@
 				INFOPLIST_FILE = ActivityIndicatorTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/ActivityIndicator copy.app/ActivityIndicator copy";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/ActivityIndicator.app/ActivityIndicator";
 			};
 			name = Debug;
 		};
@@ -818,7 +714,7 @@
 				INFOPLIST_FILE = ActivityIndicatorTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/ActivityIndicator copy.app/ActivityIndicator copy";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/ActivityIndicator.app/ActivityIndicator";
 			};
 			name = Release;
 		};
@@ -839,15 +735,6 @@
 			buildConfigurations = (
 				F237AE311AA759C0003A8A04 /* Debug */,
 				F237AE321AA759C0003A8A04 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		F26385821ADBFD4000680C77 /* Build configuration list for PBXNativeTarget "ActivityIndicatorTestsHost" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				F26385831ADBFD4000680C77 /* Debug */,
-				F26385841ADBFD4000680C77 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
