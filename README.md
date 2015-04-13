@@ -1,5 +1,7 @@
 # TTWKActivityIndicator
 
+[![Build Status](https://travis-ci.org/TouchTribe/TTWKActivityIndicator.svg?branch=master)](https://travis-ci.org/TouchTribe/TTWKActivityIndicator)
+
 A drop-in component helps creating activity animations similar to the system ones and it can be used both in WatchKit extensions and regular iOS apps.
 
 <img src="screenshot.gif" style="width: 155px" />
