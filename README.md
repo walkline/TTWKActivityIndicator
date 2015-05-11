@@ -2,11 +2,11 @@
 
 [![Build Status](https://travis-ci.org/TouchTribe/TTWKActivityIndicator.svg?branch=master)](https://travis-ci.org/TouchTribe/TTWKActivityIndicator)
 
-A drop-in component helps creating activity animations similar to the system ones and it can be used both in WatchKit extensions and regular iOS apps.
+A drop-in component that helps creating activity animations similar to the system ones and that can be used both in WatchKit extensions and regular iOS apps.
 
 <img src="screenshot.gif" style="width: 155px" />
 
-You can customize the color and the size of the bubbles. Both the current and the old animation styles are supported (the 'old' as seen in the betas of the Apple Watch simulator, the rotating one).
+You can customize the color and the size of the bubbles. Both the current and the old animation styles are supported (the 'old' is the rotating one, as seen in the betas of the Apple Watch simulator).
 
 ## Quick Start
 
@@ -29,7 +29,7 @@ To use with your WatchKit extension:
     ];
     ```
 
- - then transfer it into your image using `setToGroupOrImage:` method:
+ - then transfer it into your group or image using its `setToGroupOrImage:` method:
 
     ```objective-c
     // Assuming self.activityIndicator is an instance of WKInterfaceImage or WKInterfaceGroup
@@ -53,7 +53,7 @@ it, simply add the following line to your Podfile:
 
     pod 'TTWKActivityIndicator'
 
-You can also just drop in `/Pod/Classes/TTWKActivityIndicator.*` into your project (along with `/Pod/Classes/TTWKActivityIndicatorView.*` in case you need it a normal iOS app as well).
+You can also drop in `/Pod/Classes/TTWKActivityIndicator.*` into your project (along with `/Pod/Classes/TTWKActivityIndicatorView.*` in case you need it a normal iOS app as well).
 
 ## Author & License
 
