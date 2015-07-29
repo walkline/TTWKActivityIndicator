@@ -354,7 +354,7 @@
 		];
 
 		// We also need to ensure here that the animation has started, so no extra lines are required by the user.
-		// Note that we are not using startAnimation method, which has a bug in that it plays any animation on max speed
+		// Note that we are not using startAnimation method, which has a bug in that it plays any animation at max speed
 		[group
 			startAnimatingWithImagesInRange:NSMakeRange(0, [_config numberOfFramesForFrameRate:[TTWKActivityIndicator defaultFrameRate]])
 			duration:[_config loopDuration]
