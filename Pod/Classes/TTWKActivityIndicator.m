@@ -8,7 +8,6 @@
 #import "TTWKActivityIndicator.h"
 
 #import <UIKit/UIKit.h>
-#import <WatchKit/WatchKit.h>
 
 /** 
  * This is to hold the differences between indicators of different styles.
@@ -314,78 +313,7 @@
 
 - (void)setCachedWithBlock:(void (^)(NSString *name, UIImage *image))block {
 
-	NSString *cacheKey = [self cacheKey];
-
-	if ([[WKInterfaceDevice currentDevice].cachedImages objectForKey:cacheKey]) {
-
-		// The image is in the cache already, let's just use it
-		block(cacheKey, nil);
-
-	} else {
-
-		// Not cached yet, let's build the image, cache and upload
-
-		UIImage *image = [self animatedImage];
-
-		if ([[WKInterfaceDevice currentDevice] addCachedImage:image name:cacheKey]) {
-			// Was able to add it into the cache, let's use it
-			block(cacheKey, nil);
-		} else {
-			// Could not add it into the cache, perhaps it's full, let's upload directly
-			block(nil, image);
-		}
-	}
 }
 
-- (void)setToGroupOrImage:(WKInterfaceObject *)groupOrImage {
-
-	if ([groupOrImage isKindOfClass:[WKInterfaceGroup class]]) {
-
-		WKInterfaceGroup *group = (WKInterfaceGroup *)groupOrImage;
-
-		[self
-			setCachedWithBlock:^(NSString *name, UIImage *image) {
-				if (name) {
-					[group setBackgroundImageNamed:name];
-				} else if (image) {
-					[group setBackgroundImage:image];
-				}
-			}
-		];
-
-		// We also need to ensure here that the animation has started, so no extra lines are required by the user.
-		// Note that we are not using startAnimation method, which has a bug in that it plays any animation at max speed
-		[group
-			startAnimatingWithImagesInRange:NSMakeRange(0, [_config numberOfFramesForFrameRate:[TTWKActivityIndicator defaultFrameRate]])
-			duration:[_config loopDuration]
-			repeatCount:0
-		];
-
-	} else if ([groupOrImage isKindOfClass:[WKInterfaceImage class]]) {
-
-		//
-		// Well, it's the same process for WKInterfaceImage, just a few different method names
-		//
-		WKInterfaceImage *image = (WKInterfaceImage *)groupOrImage;
-		[self
-			setCachedWithBlock:^(NSString *name, UIImage *img) {
-				if (name) {
-					[image setImageNamed:name];
-				} else if (image) {
-					[image setImage:img];
-				}
-			}
-		];
-		[image
-			startAnimatingWithImagesInRange:NSMakeRange(0, [_config numberOfFramesForFrameRate:[TTWKActivityIndicator defaultFrameRate]])
-			duration:_config.loopDuration
-			repeatCount:0
-		];
-
-	} else {
-
-		NSAssert(NO, @"%s expects either WKInterfaceGroup or WKInterfaceImage passed to it", sel_getName(_cmd));
-	}
-}
 
 @end

@@ -19,8 +19,6 @@ Pod::Spec.new do |s|
   
   s.platform     = :ios, '5.1'
   s.requires_arc = true
-  
-  s.frameworks = 'WatchKit'
 
   s.source_files = 'Pod/Classes/**/*'
 end

@@ -6,7 +6,6 @@
 //
 
 #import <UIKit/UIKit.h>
-#import <WatchKit/WatchKit.h>
 
 /** 
  * Supported styles of activity indicators: the modern one and the one that was used in beta versions of Apple Watch OS.
@@ -75,15 +74,6 @@ typedef NS_ENUM(NSInteger, TTWKActivityIndicatorStyle) {
 
 /** Another shortcut initializing the indicator with the default style and bubble size. */
 - (id)initWithColor:(UIColor *)color;
-
-/** 
- * Sets an animatiton of this activity indicator as a (background) image for the provided 
- * WKInterfaceGroup or WKInterfaceImage. 
- *
- * It uses the image cache of Apple Watch, if possible, so subsequent use of the same indicator 
- * (same by style/color/size, can be a different instance) will be faster.
- */
-- (void)setToGroupOrImage:(WKInterfaceObject *)groupOrImage;
 
 @end
 
